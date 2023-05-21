@@ -14,6 +14,11 @@ const userSchema = mongoose.Schema({
         required : [true, 'Please provide your name'],
         trim : true
     },
+    gender : { 
+        type : String,
+        required : [true, 'Please provide your name'],
+        trim : true
+    },
     email : {
         type : String,
         required : [true, 'Please provide your email'],
@@ -31,7 +36,7 @@ const userSchema = mongoose.Schema({
     photo : String, 
     role : {
         type: String,
-        enum : ['user', 'admin', 'controller'],
+        enum : ['user', 'admin', 'staff'],
         default : 'user'
     },
     password : {
