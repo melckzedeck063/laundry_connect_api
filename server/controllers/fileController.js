@@ -30,6 +30,11 @@ const  upload =  multer({
     fileFilter : multerFilter
 })
 
+
+exports.uploadImage =  upload.single('photo');
+
+
+
 exports.postSignal= (req,res) =>  {
     const data = JSON.stringify(req.body);
   
@@ -55,5 +60,3 @@ exports.readSignal  =  (req,res) =>  {
         }
       });
 }
-
-exports.uploadImage =  upload.single('photo');

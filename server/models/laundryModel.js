@@ -1,4 +1,5 @@
 const mongoose =  require('mongoose');
+const  validator =  require('validator');
 
 const LaundrySchema = mongoose.Schema({
     laundryName : {
@@ -16,7 +17,7 @@ const LaundrySchema = mongoose.Schema({
         required : true,
         trim  : true
     },
-    phone : {
+    telephone : {
         type : String,
         minLength : [10, "not less than 10"],
         maxLength  :  [10, 'Not  longer than  10'],
@@ -35,6 +36,12 @@ const LaundrySchema = mongoose.Schema({
         required  : true,
         trim  :  true
     },
+    category : {
+       type :   mongoose.Schema.ObjectId,
+       ref :  'Category',
+       required : true,
+       trim  : true 
+    },
     date_created :  {
         type : Date,
         default : Date.now()
@@ -45,8 +52,11 @@ const LaundrySchema = mongoose.Schema({
 
 LaundrySchema.pre(/^find/, function(next){
     this.populate({
-        path  : 'created_by',
-        select: '-password -  __V -role'
+        path  :'owner',
+        select: '-password -__v -role'
+    }).populate({
+        path  :  'category',
+        select :  '-__v'
     })
 
     next();

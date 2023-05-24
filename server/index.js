@@ -12,35 +12,35 @@ const globalErrorHandler =  require('./controllers/errorController')
 
 dotenv.config({ path: './config.env' })
 
-// const multer = require('multer');
-// // const upload = multer({ dest: 'uploads/posts' });
+ const multer = require('multer');
+  //const upload = multer({ dest: 'uploads/posts' });
 
-// const  multerStorage =  multer.diskStorage({
-//     destination :  (req,file,cb) => {
-//         cb(null,'./uploads/posts')
-//     },
-//     filename : (req,file,cb) => {
-//         console.log(file)
-//         const ext =  file.mimetype.split('/')[1];
-//         const rand =  Math.floor(Math.random() * 1E9);
-//         cb(null, `product-${rand}-${Date.now()}.${ext}`)
-//     }
-// })
+ const  multerStorage =  multer.diskStorage({
+     destination :  (req,file,cb) => {
+         cb(null,'./uploads/posts')
+     },
+     filename : (req,file,cb) => {
+         console.log(file)
+         const ext =  file.mimetype.split('/')[1];
+         const rand =  Math.floor(Math.random() * 1E9);
+         cb(null, `laundry-${rand}-${Date.now()}.${ext}`)
+     }
+ })
 
-// const multerFilter =  (req,file, cb) =>  {
-//     console.log(file)
-//     if(file.mimetype.startsWith('image')){
-//         cb(null,true)
-//     }
-//     else{
-//         cb(new AppError('The  file  you  uploaded is not supported', 400))
-//     }
-// }
+ const multerFilter =  (req,file, cb) =>  {
+     console.log(file)
+     if(file.mimetype.startsWith('image')){
+         cb(null,true)
+     }
+    else{
+        cb(new AppError('The  file  you  uploaded is not supported', 400))
+    }
+ }
 
-// const  upload =  multer({
-//     storage : multerStorage,
-//     fileFilter : multerFilter
-// })
+ const  upload =  multer({
+    storage : multerStorage,
+    fileFilter : multerFilter
+ })
 
 
 const app = express();
@@ -75,6 +75,9 @@ MongoClient.connect(MongoUrl, { useUnifiedTopology: true }, (err, client) => {
 
 const  userRouter = require('./routes/userRoute');
 const signalRouter =  require('./routes/fileUpload_router');
+const laundryRouter =  require('./routes/laundry_route');
+const categoryRouter =  require('./routes/category_route');
+
 // const productRouter =   require('./routes/productRoute')
 // const bakeryRouter =  require('./routes/bakeryRoute');
 // // const fileUploadRouter =  require('./routes/fileUpload_router');
@@ -83,6 +86,8 @@ const signalRouter =  require('./routes/fileUpload_router');
 
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/signal', signalRouter);
+app.use('/api/v1/laundry', laundryRouter)
+app.use('/api/v1/category', categoryRouter);
 
 // app.use('/api/v1/products', productRouter);
 // app.use('/api/v1/bakeries',bakeryRouter )
@@ -90,22 +95,22 @@ app.use('/api/v1/signal', signalRouter);
 // app.use('/api/v1/cart_items',cartRouter);
 // app.use('/api/v1/orders', orderRouter)
 
-// app.post('/api/v1/posts/upload_photo', upload.single('photo'), (req, res) => {
-//     // do something with the photo
-//     console.log(req.file)
-//     const path =  req.file.path;
-//     if(!path || path === undefined){
-//         console.log("something went wrong")
-//     }
+ app.post('/api/v1/posts/upload_photo', upload.single('photo'), (req, res) => {
+    // do something with the photo
+ //   console.log(req.file)
+    const path =  req.file.path;
+    if(!path || path === undefined){
+       console.log("something went wrong")
+    }
 
-//     res.status(201).json({
-//         status : "successfull",
-//         message : "photo uploaded succesfully",
-//         data : path
-//     })
-//   });
+    res.status(201).json({
+         status : "successfull",
+        message : "photo uploaded succesfully",
+        data : path
+     })
+   });
 
-// app.use('/uploads', express.static('uploads'));
+ app.use('/uploads', express.static('uploads'));
 
 app.use(globalErrorHandler);
 
