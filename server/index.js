@@ -12,12 +12,14 @@ const globalErrorHandler =  require('./controllers/errorController')
 
 dotenv.config({ path: './config.env' })
 
+
+
  const multer = require('multer');
   //const upload = multer({ dest: 'uploads/posts' });
 
  const  multerStorage =  multer.diskStorage({
      destination :  (req,file,cb) => {
-         cb(null,'./uploads/posts')
+         cb(null,'./server/uploads/posts')
      },
      filename : (req,file,cb) => {
          console.log(file)
@@ -111,6 +113,7 @@ app.use('/api/v1/category', categoryRouter);
    });
 
  app.use('/uploads', express.static('uploads'));
+ //app.use('/uploads/posts', express.static(__dirname + '/server/uploads/posts'));
 
 app.use(globalErrorHandler);
 
