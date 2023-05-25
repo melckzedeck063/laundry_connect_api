@@ -1,15 +1,15 @@
 {
-  "version": 2,
-  "builds": [
-    { "src": "server/**", "use": "@vercel/node" }
-  ],
-  "routes": [
-    {
-      "src": "/uploads/(.*)",
-      "headers": { "Cache-Control": "public, max-age=0, must-revalidate" },
-      "continue": true
-    },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/server/index.js" }
-  ]
-}
+    "version" : 2,
+    "builds": [
+      { 
+        "src": "*.js", 
+        "use": "@vercel/node"
+       }
+    ],
+    "routes": [
+        { 
+            "src": "/(.*)", 
+            "dest": "/"
+         }
+      ]
+  }
