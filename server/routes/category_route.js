@@ -6,7 +6,7 @@ const AuthController =  require('../controllers/AuthController');
 const CategoryController =  require('../controllers/categoryController');
 const fileController =  require('../controllers/fileController')
 
-// router.use(AuthController.protect);
+router.use(AuthController.protect);
 
 router.get('/categories', CategoryController.getAllCategories);
 router.get('/category/:id', CategoryController.getCategoryById);
